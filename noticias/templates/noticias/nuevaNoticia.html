@@ -1,0 +1,63 @@
+{% load staticfiles %}
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Nueva Noticia</title>
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<link type="text/css" rel="stylesheet" href="{% static 'noticias/minified/themes/modern.min.css' %}"  media="all" />
+		<link rel="stylesheet" href="{% static 'noticias/pure-drawer.css' %}"/>
+		<link rel="stylesheet" href="{% static 'paginaPrincipal/style.css' %}"/>
+		<script type="text/javascript" src="{% static 'noticias/minified/jquery.sceditor.bbcode.min.js' %}"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script>
+			$(function() {
+			// Replace all textarea's
+			    // with SCEditor
+			    $("textarea").sceditor({
+			    	plugins: "bbcode",
+					style: "/static/noticias/minified/jquery.sceditor.default.min.css",
+					resizeWidth: false
+			    });
+			});
+		</script>
+		{% if error %}
+		    <span>{{ error }}</span>    
+		{% endif %}
+		<h1 id="titulo">RATE ME</h1>
+	</head>
+	<body>    
+		<div class="pure-container" data-effect="pure-effect-push">
+         	<input  type="checkbox" id="pure-toggle-left" class="pure-toggle" data-toggle="left"/>
+	        <label class="pure-toggle-label" for="pure-toggle-left" data-toggle-label="left">
+	         	<span class="pure-toggle-icon"></span>
+	        </label>
+	        <nav class="pure-drawer" data-position="left">
+	        	<div id="vertical2">
+            		<a href="{% url 'paginaPrincipal:main' %}">Regresar</a><br>
+       			</div>
+            </nav>
+        
+	        <div class="pure-pusher-container">
+	            <div class="pure-pusher">
+				    
+					<div id="resumen" align="center">
+						<br><br>
+						<br><br>
+						<form action="/noticias/" method="POST"> {% csrf_token %}
+							{{ formNoticia.non_field_errors }}
+							{% for campo in formNoticia %}
+							{{ campo.label_tag }}
+							{{ campo }}
+							<br><br>
+							{% endfor %}
+							<br><br>
+							<input type="submit" value="Submit" />
+							<br><br>
+						</form>
+					</div>
+				</div>
+				<label class="pure-overlay" for="pure-toggle-left" data-overlay="left"></label> 
+			</div>
+		</div>
+	</body>
+</html>

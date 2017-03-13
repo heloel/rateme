@@ -1,0 +1,100 @@
+
+
+{% load staticfiles %}
+{% load bbcode_tags %}
+{% bbcode entry.bbcode_content %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Rate Me</title>
+        <link type="text/css" rel="stylesheet" href="{% static 'paginaPrincipal/style.css' %}"/>
+        <link rel="stylesheet" href="{% static 'paginaPrincipal/pure-drawer.css' %}"/>
+        
+        <h1 id="titulo">RATE ME</h1>
+    </head>
+    <body>
+    <div class="pure-container" data-effect="pure-effect-push">
+         <input  type="checkbox" id="pure-toggle-left" class="pure-toggle" data-toggle="left"/>
+         <label class="pure-toggle-label" for="pure-toggle-left" data-toggle-label="left"><span class="pure-toggle-icon"></span></label>
+         <nav class="pure-drawer" data-position="left">
+         <div id="vertical">
+                          
+        
+            <a href="{% url 'paginaPrincipal:index' %}">&Uacuteltimas reviews</a><br>
+            <a href="#">Acerca de</a><br>
+            {% if not user.is_authenticated %}
+                <a href="/registro/">&Uacutenete</a><br>
+                <a href="/login/">Inicia sesi&oacuten</a><br>
+            {% else %}
+                <a href="/nuevaResena/">Crear rese&ntildea</a><br>
+                <a href="/verResena/">Ver rese&ntildea</a><br>
+                <a href="/noticias/">Crear noticia</a><br>
+                <a href="/noticias/adminNoticia">Administrar noticias</a><br>
+                <a href="/login/logout">Log out</a><br>
+            {% endif %}
+       </div>
+            </nav>  
+         <div class="pure-pusher-container">
+                <div class="pure-pusher">
+                    
+        
+        
+        <div id="principal">
+                <div id="areaTexto" class="divImg">
+
+                <p>
+                <!-- Para buscar la resena, te manda a resenaBuscada-->
+                <form action = "/resenaBuscada/">
+                    {{ busqueda }}
+                    <input type = "submit" value = "Buscar"/>
+                </form>
+
+	        		<table>
+			        	<tr>
+			                <td><img src="{% static 'paginaPrincipal/img/black-ops-III.png' %}"/></td>
+			                <td><img src="{% static 'paginaPrincipal/img/witcher-3.png' %}"></td>
+			                <td><img src="{% static 'paginaPrincipal/img/dragon-age.png' %}"></td>
+			                <td><img src="{% static 'paginaPrincipal/img/arkham.png' %}"></td>
+			                <td><img src="{% static 'paginaPrincipal/img/bloodborne.png' %}"></td>
+			            </tr>
+			            <tr>
+			            	<td>CoD: Black Ops III</td>
+			            	<td>The Witcher 3</td>
+			            	<td>Dragon Age 3</td>
+			            	<td>Batman: Arkham Knight</td>
+			            	<td>Bloodbourne</td>
+			            </tr>
+			        </table>
+			        <br>
+			        <div class="naranja">.
+			        </div>
+			        <br>
+			    </p>
+
+                    <p> 
+                        <h1>Reviews Encontradas</h1>
+                        <table align="center">
+                            {% csrf_token %}
+                            {% for resena in resenasEncontradas %}
+                                {% if not resena.borrado %}
+                                    <tr>
+                                        <td>{{ resena }}</td>
+				                        <td>
+				                            <form action = "/verResena/unaResena">
+				                                <input type = "hidden" name = "resena" value = "{{ resena.id }}"/>
+				                                <input type = "submit" value = "Ver Resena"/>
+				                            </form>
+				                        </td>
+                                    </tr>
+                                    </br>
+                                {% endif %}
+                            {% endfor %}
+                        </table>
+                        <br><br>
+                    </p>
+                </div>
+            <label class="pure-overlay" for="pure-toggle-left" data-overlay="left"></label> 
+        </div>
+    </div>    
+    </body>
+</html>

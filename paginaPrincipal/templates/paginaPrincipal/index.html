@@ -1,0 +1,29 @@
+{% load staticfiles %}
+<html>
+    <head>
+        <title>Rate Me</title>
+        <link type="text/css" rel="stylesheet" href="{% static 'paginaPrincipal/style.css' %}"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body class="main">
+            <div class="row dim">
+
+                    <div class="col-left mainMargin">
+                        <a href="{% url 'paginaPrincipal:main' %}"><img width="100%" src="{% static 'paginaPrincipal/img/tloz.png' %}"></a>
+                        <a href=""><img width="100%" src="{% static 'paginaPrincipal/img/gears3.png' %}"/></a>
+                    </div>
+
+                    <div class="col-right">
+                        <a href="{% url 'paginaPrincipal:main' %}"><img width="95%" src="{% static 'paginaPrincipal/img/inicio.png' %}"/></a>
+                        {% if not user.is_authenticated %}
+                            <a href="/login/"><img width="95%" src="{% static 'paginaPrincipal/img/login.png' %}"/></a>
+                            <a href="/registro/"><img width="95%" src="{% static 'paginaPrincipal/img/register.png' %}"/></a>
+                        {% else %}
+                            <a href="/login/logout"><img width="95%" src="{% static 'paginaPrincipal/img/logout.png' %}"/></a>
+                        {% endif %}
+                        <a href=""><img width="95%" src="{% static 'paginaPrincipal/img/aboutus.png' %}"/></a>
+                    </div>
+
+            </div>  
+    </body>
+</html>
